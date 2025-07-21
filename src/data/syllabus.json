@@ -1,0 +1,172 @@
+{
+  "wordpress": {
+    "title": "WordPress CMS Mastery",
+    "description": "Complete WordPress content management training",
+    "duration": "8 weeks",
+    "level": "Beginner to Advanced",
+    "modules": [
+      {
+        "week": 1,
+        "title": "WordPress Fundamentals",
+        "topics": [
+          "Introduction to WordPress and CMS concepts",
+          "WordPress.com vs WordPress.org differences",
+          "Installing WordPress (local and hosting)",
+          "WordPress dashboard tour and navigation",
+          "Understanding themes, plugins, and content"
+        ]
+      },
+      {
+        "week": 2,
+        "title": "Content Management Basics",
+        "topics": [
+          "Creating and managing posts vs pages",
+          "Working with the block editor (Gutenberg)",
+          "Media library and file management",
+          "Categories and tags organization",
+          "User roles and permissions"
+        ]
+      },
+      {
+        "week": 3,
+        "title": "Theme Customization",
+        "topics": [
+          "Choosing and installing themes",
+          "WordPress Customizer deep dive",
+          "Creating menus and navigation",
+          "Widget areas and sidebar management",
+          "Custom headers and backgrounds"
+        ]
+      },
+      {
+        "week": 4,
+        "title": "Plugin Management",
+        "topics": [
+          "Essential WordPress plugins overview",
+          "SEO plugins (Yoast, RankMath)",
+          "Security plugins and best practices",
+          "Backup and maintenance plugins",
+          "Performance optimization plugins"
+        ]
+      },
+      {
+        "week": 5,
+        "title": "Advanced Content Creation",
+        "topics": [
+          "Custom post types and fields",
+          "Advanced Gutenberg blocks",
+          "Creating landing pages",
+          "Contact forms and lead capture",
+          "E-commerce with WooCommerce basics"
+        ]
+      },
+      {
+        "week": 6,
+        "title": "Site Optimization & SEO",
+        "topics": [
+          "On-page SEO best practices",
+          "Site speed optimization",
+          "Mobile responsiveness checking",
+          "Analytics setup and tracking",
+          "Search console integration"
+        ]
+      },
+      {
+        "week": 7,
+        "title": "Maintenance & Security",
+        "topics": [
+          "Regular backup strategies",
+          "WordPress updates and maintenance",
+          "Security hardening techniques",
+          "Troubleshooting common issues",
+          "Performance monitoring"
+        ]
+      },
+      {
+        "week": 8,
+        "title": "Basic Development & Project",
+        "topics": [
+          "Child themes creation and usage",
+          "Basic HTML/CSS for WordPress",
+          "Custom CSS and code snippets",
+          "Final project: Complete website build",
+          "Going live and domain management"
+        ]
+      }
+    ]
+  },
+  "shopify": {
+    "title": "Shopify E-commerce Management",
+    "description": "Master Shopify store management and optimization",
+    "duration": "6 weeks",
+    "level": "Beginner to Intermediate",
+    "modules": [
+      {
+        "week": 1,
+        "title": "Shopify Fundamentals",
+        "topics": [
+          "E-commerce basics and Shopify overview",
+          "Setting up your Shopify store",
+          "Understanding Shopify plans and pricing",
+          "Admin dashboard navigation",
+          "Basic store configuration"
+        ]
+      },
+      {
+        "week": 2,
+        "title": "Product Management",
+        "topics": [
+          "Adding and organizing products",
+          "Product variants and options",
+          "Inventory management",
+          "Collections and product organization",
+          "SEO for product pages"
+        ]
+      },
+      {
+        "week": 3,
+        "title": "Store Design & Themes",
+        "topics": [
+          "Choosing and customizing themes",
+          "Theme customization options",
+          "Creating compelling homepage design",
+          "Navigation and menu setup",
+          "Mobile optimization"
+        ]
+      },
+      {
+        "week": 4,
+        "title": "Orders & Customer Management",
+        "topics": [
+          "Processing and managing orders",
+          "Customer accounts and profiles",
+          "Shipping and tax configuration",
+          "Payment gateway setup",
+          "Discount codes and promotions"
+        ]
+      },
+      {
+        "week": 5,
+        "title": "Marketing & Analytics",
+        "topics": [
+          "Shopify marketing tools",
+          "Email marketing integration",
+          "Social media selling",
+          "Analytics and reporting",
+          "Conversion optimization"
+        ]
+      },
+      {
+        "week": 6,
+        "title": "Apps & Basic Development",
+        "topics": [
+          "Essential Shopify apps",
+          "App installation and management",
+          "Basic Liquid template editing",
+          "Store optimization techniques",
+          "Launch preparation and go-live"
+        ]
+      }
+    ]
+  }
+}
