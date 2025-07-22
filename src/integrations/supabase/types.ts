@@ -14,7 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      courses: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration: string
+          id: string
+          name: string
+          price: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration: string
+          id: string
+          name: string
+          price: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration?: string
+          id?: string
+          name?: string
+          price?: number
+        }
+        Relationships: []
+      }
+      enrollments: {
+        Row: {
+          course_type: string
+          created_at: string
+          email: string
+          enrollment_date: string
+          enrollment_status: string | null
+          full_name: string
+          id: string
+          message: string | null
+          newsletter_subscription: boolean | null
+          payment_status: string | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          course_type: string
+          created_at?: string
+          email: string
+          enrollment_date?: string
+          enrollment_status?: string | null
+          full_name: string
+          id?: string
+          message?: string | null
+          newsletter_subscription?: boolean | null
+          payment_status?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          course_type?: string
+          created_at?: string
+          email?: string
+          enrollment_date?: string
+          enrollment_status?: string | null
+          full_name?: string
+          id?: string
+          message?: string | null
+          newsletter_subscription?: boolean | null
+          payment_status?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
