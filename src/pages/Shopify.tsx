@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import shopifyImage from "@/assets/shopify-course.jpg";
+import syllabusData from "@/data/syllabus.json";
 
 const courseFeatures = [
   {
@@ -52,56 +53,7 @@ const courseFeatures = [
   }
 ];
 
-const weeklyModules = [
-  {
-    week: 1,
-    title: "Shopify Fundamentals",
-    duration: "5 hours",
-    lessons: 7,
-    topics: [
-      "E-commerce basics and Shopify overview",
-      "Setting up your Shopify store",
-      "Understanding Shopify plans and pricing",
-      "Admin dashboard navigation"
-    ]
-  },
-  {
-    week: 2,
-    title: "Product Management",
-    duration: "6 hours",
-    lessons: 8,
-    topics: [
-      "Adding and organizing products",
-      "Product variants and options",
-      "Inventory management",
-      "Collections and product organization"
-    ]
-  },
-  {
-    week: 3,
-    title: "Store Design & Themes",
-    duration: "5 hours",
-    lessons: 7,
-    topics: [
-      "Choosing and customizing themes",
-      "Theme customization options",
-      "Creating compelling homepage design",
-      "Navigation and menu setup"
-    ]
-  },
-  {
-    week: 4,
-    title: "Orders & Customer Management",
-    duration: "6 hours",
-    lessons: 9,
-    topics: [
-      "Processing and managing orders",
-      "Customer accounts and profiles",
-      "Shipping and tax configuration",
-      "Payment gateway setup"
-    ]
-  }
-];
+const shopifyData = syllabusData.shopify;
 
 const learningOutcomes = [
   "Set up and configure professional Shopify stores",
@@ -218,7 +170,7 @@ export default function Shopify() {
           </div>
           
           <div className="max-w-4xl mx-auto space-y-6">
-            {weeklyModules.map((module, index) => (
+            {shopifyData.modules.map((module, index) => (
               <Card key={index} className="hover:shadow-card transition-all duration-300">
                 <CardHeader>
                   <div className="flex items-center justify-between">
@@ -230,7 +182,7 @@ export default function Shopify() {
                         {module.title}
                       </CardTitle>
                       <CardDescription>
-                        {module.duration} • {module.lessons} lessons
+                        {shopifyData.duration} • {module.topics.length} topics
                       </CardDescription>
                     </div>
                     <Badge variant="outline">Week {module.week}</Badge>

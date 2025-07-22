@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import wordpressImage from "@/assets/wordpress-course.jpg";
+import syllabusData from "@/data/syllabus.json";
 
 const courseFeatures = [
   {
@@ -53,56 +54,7 @@ const courseFeatures = [
   }
 ];
 
-const weeklyModules = [
-  {
-    week: 1,
-    title: "WordPress Fundamentals",
-    duration: "6 hours",
-    lessons: 8,
-    topics: [
-      "Introduction to WordPress and CMS concepts",
-      "WordPress.com vs WordPress.org differences", 
-      "Installing WordPress (local and hosting)",
-      "WordPress dashboard tour and navigation"
-    ]
-  },
-  {
-    week: 2,
-    title: "Content Management Basics",
-    duration: "5 hours",
-    lessons: 7,
-    topics: [
-      "Creating and managing posts vs pages",
-      "Working with the block editor (Gutenberg)",
-      "Media library and file management",
-      "Categories and tags organization"
-    ]
-  },
-  {
-    week: 3,
-    title: "Theme Customization",
-    duration: "6 hours",
-    lessons: 9,
-    topics: [
-      "Choosing and installing themes",
-      "WordPress Customizer deep dive",
-      "Creating menus and navigation",
-      "Widget areas and sidebar management"
-    ]
-  },
-  {
-    week: 4,
-    title: "Plugin Management",
-    duration: "5 hours",
-    lessons: 8,
-    topics: [
-      "Essential WordPress plugins overview",
-      "SEO plugins (Yoast, RankMath)",
-      "Security plugins and best practices",
-      "Backup and maintenance plugins"
-    ]
-  }
-];
+const wordpressData = syllabusData.wordpress;
 
 const learningPath = [
   { step: 1, title: "Enroll & Setup", description: "Join the course and set up your learning environment" },
@@ -218,7 +170,7 @@ export default function WordPress() {
           </div>
           
           <div className="max-w-4xl mx-auto space-y-6">
-            {weeklyModules.map((module, index) => (
+            {wordpressData.modules.map((module, index) => (
               <Card key={index} className="hover:shadow-card transition-all duration-300">
                 <CardHeader>
                   <div className="flex items-center justify-between">
@@ -230,7 +182,7 @@ export default function WordPress() {
                         {module.title}
                       </CardTitle>
                       <CardDescription>
-                        {module.duration} • {module.lessons} lessons
+                        {wordpressData.duration} • {module.topics.length} topics
                       </CardDescription>
                     </div>
                     <Badge variant="outline">Week {module.week}</Badge>

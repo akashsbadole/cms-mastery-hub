@@ -90,6 +90,34 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate required fields
+    if (!formData.name.trim()) {
+      toast({
+        title: "Name Required",
+        description: "Please enter your full name.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!formData.email.trim()) {
+      toast({
+        title: "Email Required", 
+        description: "Please enter your email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!formData.message.trim()) {
+      toast({
+        title: "Message Required",
+        description: "Please enter your message.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     if (!formData.terms) {
       toast({
         title: "Terms Required",
@@ -101,14 +129,16 @@ export default function Contact() {
 
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    // Simulate form submission with realistic delay
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
       toast({
-        title: "Message Sent!",
+        title: "Message Sent Successfully!",
         description: "Thank you for your interest! We'll contact you within 24 hours.",
       });
       
-      // Reset form
+      // Reset form after successful submission
       setFormData({
         name: "",
         email: "",
@@ -119,8 +149,15 @@ export default function Contact() {
         terms: false
       });
       
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
 
   return (
