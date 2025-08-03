@@ -1,41 +1,83 @@
-# Training Course Platform
+# CMS Training Hub - Professional Web Training Platform
 
-A modern web application for WordPress and Shopify training courses with enrollment management and email notifications.
+A comprehensive training platform for WordPress and Shopify courses with professional services, enrollment management, and email notifications.
 
-## 🚀 Features
+## 🚀 Platform Features
 
-### Course Management
-- **WordPress CMS Training** - 4-week comprehensive course ($199)
+### 📚 Course Management
+- **WordPress CMS Training** - 4-week comprehensive course ($299)
 - **Shopify E-commerce Training** - 6-week store setup course ($249) 
-- **Complete CMS Package** - Combined 8-week program ($399)
+- **React Development** - Modern JavaScript framework ($399)
+- **Full Stack Development** - Complete web development ($499)
+- **Advanced CMS Package** - Combined training programs ($699)
 
-### Enrollment System
-- Student registration with form validation
-- Course selection (WordPress, Shopify, or both)
-- Contact information collection
+### 💼 Professional Services
+- **Custom Development** - Web application development
+- **Website Maintenance** - Ongoing support and updates
+- **SEO Consulting** - Search engine optimization
+- **Technical Training** - Personalized coaching sessions
+- **Service categories**: Development, Maintenance, Consulting, Training
+- **Flexible pricing**: Hourly, monthly, or project-based rates
+
+### 📋 Advanced Enrollment System
+- Student registration with comprehensive form validation
+- Multi-course selection (WordPress, Shopify, React, Full Stack)
+- Contact information collection with phone validation
+- Service inquiry system with project details
 - Optional newsletter subscription
-- Message/inquiry submission
+- Message/inquiry submission with categorization
 
-### Backend Integration
-- **Supabase Database** - Secure data storage
-- **Email Notifications** - Automated confirmation emails
-- **Real-time Data** - Live enrollment tracking
-- **Row Level Security** - Protected user data
+### 🔧 Backend Integration
+- **Supabase Database** - Secure PostgreSQL data storage
+- **Email Notifications** - Automated confirmation emails via Resend
+- **Real-time Data** - Live enrollment and inquiry tracking
+- **Row Level Security** - Protected user data access
+- **Edge Functions** - Serverless backend functionality
 
-### Technical Stack
-- **Frontend**: React 18, TypeScript, Vite
-- **Styling**: Tailwind CSS, shadcn/ui components
-- **Backend**: Supabase (PostgreSQL, Edge Functions)
-- **Email**: Resend.com integration
-- **Routing**: React Router DOM
+### 🎨 Modern UI/UX
+- **Responsive Design** - Mobile-first approach
+- **Dark/Light Mode** - Theme switching capability
+- **Gradient Effects** - Beautiful visual elements
+- **Smooth Animations** - Enhanced user experience
+- **Accessibility** - WCAG compliant components
+
+### 📊 Data Management
+- **Contact Submissions** - Centralized inquiry tracking
+- **Service Inquiries** - Detailed project requirement collection
+- **Enrollment Analytics** - Student registration insights
+- **Status Management** - Pending/completed tracking
+
+## 🛠️ Technical Stack
+
+### Frontend
+- **React 18** - Modern JavaScript library
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - High-quality component library
+- **React Router DOM** - Client-side routing
+- **React Hook Form** - Form management
+- **Lucide React** - Beautiful icons
+
+### Backend & Database
+- **Supabase** - Backend-as-a-Service platform
+- **PostgreSQL** - Robust relational database
+- **Edge Functions** - Serverless API endpoints
+- **Row Level Security (RLS)** - Database security
+- **Real-time subscriptions** - Live data updates
+
+### External Integrations
+- **Resend.com** - Transactional email delivery
+- **CORS handling** - Cross-origin resource sharing
+- **Form validation** - Client and server-side validation
 
 ## 📋 Prerequisites
 
 - Node.js 18+ and npm
-- Supabase account
-- Resend.com account (for email functionality)
+- Supabase account ([supabase.com](https://supabase.com))
+- Resend.com account ([resend.com](https://resend.com))
 
-## 🛠️ Installation & Setup
+## 🚀 Installation & Setup
 
 ### 1. Clone Repository
 ```bash
@@ -46,81 +88,12 @@ npm install
 
 ### 2. Supabase Configuration
 1. Create a Supabase project at [supabase.com](https://supabase.com)
-2. Run the database migration by executing this SQL in your Supabase SQL Editor:
-
-```sql
--- Create enrollments table to store student enrollment data
-CREATE TABLE public.enrollments (
-  id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
-  full_name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  phone TEXT,
-  course_type TEXT NOT NULL CHECK (course_type IN ('wordpress', 'shopify', 'both')),
-  message TEXT,
-  newsletter_subscription BOOLEAN DEFAULT false,
-  enrollment_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  payment_status TEXT DEFAULT 'pending' CHECK (payment_status IN ('pending', 'completed', 'failed')),
-  enrollment_status TEXT DEFAULT 'active' CHECK (enrollment_status IN ('active', 'completed', 'cancelled')),
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
-);
-
--- Create courses reference table
-CREATE TABLE public.courses (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  price DECIMAL(10,2) NOT NULL,
-  duration TEXT NOT NULL,
-  description TEXT,
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
-);
-
--- Insert course data
-INSERT INTO public.courses (id, name, price, duration, description) VALUES
-('wordpress', 'WordPress CMS Training', 199.00, '4 weeks', 'Complete WordPress development and management course'),
-('shopify', 'Shopify E-commerce Training', 249.00, '6 weeks', 'Comprehensive Shopify store setup and customization course'),
-('both', 'Complete CMS Package', 399.00, '8 weeks', 'Both WordPress and Shopify training courses combined');
-
--- Enable Row Level Security
-ALTER TABLE public.enrollments ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.courses ENABLE ROW LEVEL SECURITY;
-
--- Create policies for public access to courses (read-only)
-CREATE POLICY "Anyone can view courses" 
-ON public.courses 
-FOR SELECT 
-USING (true);
-
--- Create policies for enrollments (public can insert, admin can view all)
-CREATE POLICY "Anyone can create enrollments" 
-ON public.enrollments 
-FOR INSERT 
-WITH CHECK (true);
-
-CREATE POLICY "Anyone can view their own enrollments" 
-ON public.enrollments 
-FOR SELECT 
-USING (true);
-
--- Create function to update timestamps
-CREATE OR REPLACE FUNCTION public.update_updated_at_column()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = now();
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Create trigger for automatic timestamp updates
-CREATE TRIGGER update_enrollments_updated_at
-  BEFORE UPDATE ON public.enrollments
-  FOR EACH ROW
-  EXECUTE FUNCTION public.update_updated_at_column();
-```
-
-3. Database tables will be created:
+2. The database schema includes these tables:
+   - `courses` - Course catalog and pricing
    - `enrollments` - Student enrollment data
-   - `courses` - Course information and pricing
+   - `services` - Professional service offerings
+   - `service_inquiries` - Service request submissions
+   - `contact_submissions` - General contact form data
 
 ### 3. Email Service Setup
 1. Sign up at [resend.com](https://resend.com)
@@ -129,7 +102,7 @@ CREATE TRIGGER update_enrollments_updated_at
 4. Add the `RESEND_API_KEY` to your Supabase Edge Functions secrets
 
 ### 4. Environment Configuration
-The Supabase client is pre-configured in `src/integrations/supabase/client.ts` with:
+The Supabase client is pre-configured with:
 - Project URL: `https://wuvkvovcvwfnwrtmwejw.supabase.co`
 - Anon Key: (included in client configuration)
 
@@ -139,7 +112,7 @@ The Supabase client is pre-configured in `src/integrations/supabase/client.ts` w
 ```bash
 npm run dev
 ```
-The application will be available at `http://localhost:5173`
+Application available at `http://localhost:5173`
 
 ### Project Structure
 ```
@@ -148,12 +121,13 @@ src/
 │   ├── ui/              # shadcn/ui components
 │   └── Navigation.tsx   # Main navigation
 ├── pages/
-│   ├── Home.tsx         # Landing page
-│   ├── WordPress.tsx    # WordPress course page
-│   ├── Shopify.tsx      # Shopify course page
-│   ├── Syllabus.tsx     # Course syllabus
+│   ├── Home.tsx         # Landing page with courses
+│   ├── WordPress.tsx    # WordPress course details
+│   ├── Shopify.tsx      # Shopify course details
+│   ├── Services.tsx     # Professional services catalog
+│   ├── Syllabus.tsx     # Course curriculum
 │   ├── About.tsx        # About page
-│   ├── Contact.tsx      # Contact page
+│   ├── Contact.tsx      # Contact form with database integration
 │   └── Terms.tsx        # Terms of service
 ├── integrations/
 │   └── supabase/        # Supabase client & types
@@ -163,22 +137,6 @@ src/
 ```
 
 ## 📊 Database Schema
-
-### Enrollments Table
-```sql
-- id (UUID, Primary Key)
-- full_name (Text, Required)
-- email (Text, Required)
-- phone (Text, Optional)
-- course_type (Text, Required: 'wordpress', 'shopify', 'both')
-- message (Text, Optional)
-- newsletter_subscription (Boolean, Default: false)
-- enrollment_date (Timestamp, Default: now())
-- payment_status (Text, Default: 'pending')
-- enrollment_status (Text, Default: 'active')
-- created_at (Timestamp, Default: now())
-- updated_at (Timestamp, Auto-updated)
-```
 
 ### Courses Table
 ```sql
@@ -190,27 +148,94 @@ src/
 - created_at (Timestamp, Default: now())
 ```
 
+### Services Table
+```sql
+- id (UUID, Primary Key)
+- name (Text, Required)
+- category (Text, Required: development/maintenance/consulting/training)
+- price_type (Text, Required: hourly/monthly/project)
+- price (Decimal, Optional)
+- duration (Text, Optional)
+- description (Text, Optional)
+- features (Array, Optional)
+- popular (Boolean, Default: false)
+- created_at (Timestamp, Default: now())
+- updated_at (Timestamp, Auto-updated)
+```
+
+### Enrollments Table
+```sql
+- id (UUID, Primary Key)
+- full_name (Text, Required)
+- email (Text, Required)
+- phone (Text, Optional)
+- course_type (Text, Required)
+- message (Text, Optional)
+- newsletter_subscription (Boolean, Default: false)
+- enrollment_date (Timestamp, Default: now())
+- payment_status (Text, Default: 'pending')
+- enrollment_status (Text, Default: 'active')
+- created_at (Timestamp, Default: now())
+- updated_at (Timestamp, Auto-updated)
+```
+
+### Service Inquiries Table
+```sql
+- id (UUID, Primary Key)
+- full_name (Text, Required)
+- email (Text, Required)
+- phone (Text, Optional)
+- company (Text, Optional)
+- service_id (UUID, Optional, References services)
+- service_type (Text, Optional)
+- project_description (Text, Optional)
+- budget_range (Text, Optional)
+- timeline (Text, Optional)
+- message (Text, Optional)
+- status (Text, Default: 'pending')
+- created_at (Timestamp, Default: now())
+- updated_at (Timestamp, Auto-updated)
+```
+
+### Contact Submissions Table
+```sql
+- id (UUID, Primary Key)
+- full_name (Text, Required)
+- email (Text, Required)
+- phone (Text, Optional)
+- subject (Text, Optional)
+- message (Text, Required)
+- inquiry_type (Text, Default: 'general')
+- status (Text, Default: 'pending')
+- created_at (Timestamp, Default: now())
+- updated_at (Timestamp, Auto-updated)
+```
+
 ## 🔐 Security Features
 
 - **Row Level Security (RLS)** enabled on all tables
-- **Public read access** to courses
-- **Secure enrollment** submission
+- **Public read access** to courses and services
+- **Secure submission** for all forms
 - **Email validation** and sanitization
 - **CORS protection** on API endpoints
+- **Input validation** on frontend and backend
+- **SQL injection prevention** through Supabase client
 
 ## 📧 Email Functionality
 
-### Enrollment Confirmation
-- Automatic confirmation emails to students
-- Course details and next steps
-- Professional email templates
+### Automated Notifications
+- **Enrollment confirmations** - Welcome emails to students
+- **Service inquiry responses** - Professional service inquiries
+- **Contact form responses** - General inquiries
+- **Admin notifications** - New submissions alerts
 
-### Admin Notifications
-- New enrollment alerts
-- Student contact information
-- Course selection details
+### Email Templates
+- Professional HTML templates
+- Course-specific information
+- Next steps and contact details
+- Branded styling and layouts
 
-## 🚢 Deployment
+## 🚀 Deployment
 
 ### Deploy with Lovable
 1. Open your [Lovable Project](https://lovable.dev/projects/6fe38bd5-6b69-4a16-849b-564280278876)
@@ -218,18 +243,17 @@ src/
 3. Your app will be deployed instantly
 
 ### Deploy to Other Platforms
-The application can be deployed to any static hosting service:
 
 #### Vercel
 ```bash
 npm run build
-# Deploy the dist/ folder
+# Deploy the dist/ folder to Vercel
 ```
 
 #### Netlify
 ```bash
 npm run build
-# Deploy the dist/ folder
+# Deploy the dist/ folder to Netlify
 ```
 
 #### Traditional Hosting
@@ -247,6 +271,39 @@ To connect a custom domain:
 
 *Note: Paid Lovable plan required for custom domains*
 
+## 📱 User Experience Features
+
+### Student Journey
+- Browse comprehensive course catalog
+- View detailed course syllabi
+- Submit enrollment applications
+- Receive automated email confirmations
+- Access mobile-responsive interface
+- Track enrollment status
+
+### Service Inquiries
+- Browse professional services catalog
+- Filter by category (Development, Maintenance, Consulting, Training)
+- View pricing and features
+- Submit detailed project requirements
+- Receive personalized quotes
+- Track inquiry status
+
+### Contact System
+- Multiple inquiry types (General, Course, Technical, Partnership)
+- Comprehensive contact form
+- FAQ section with common questions
+- Multiple contact methods
+- Real-time form validation
+
+### Admin Capabilities
+- View all submissions in Supabase dashboard
+- Track enrollment and inquiry statuses
+- Monitor course and service popularity
+- Access student contact information
+- Manage email notifications
+- Generate analytics reports
+
 ## 🛠️ Available Scripts
 
 ```bash
@@ -256,40 +313,79 @@ npm run preview      # Preview production build
 npm run lint         # Run ESLint
 ```
 
-## 📱 Features Overview
-
-### Student Experience
-- Browse course offerings
-- View detailed syllabus
-- Submit enrollment applications
-- Receive email confirmations
-- Mobile-responsive design
-
-### Admin Capabilities
-- View enrollment data in Supabase dashboard
-- Track payment statuses
-- Monitor course popularity
-- Access student contact information
-
 ## 🔧 Customization
 
 ### Adding New Courses
 1. Add course data to the `courses` table in Supabase
 2. Update course selection options in enrollment forms
 3. Create new course detail pages as needed
+4. Update navigation and routing
+
+### Adding New Services
+1. Add service data to the `services` table in Supabase
+2. Configure pricing and features
+3. Update service categories if needed
+4. Customize inquiry forms
 
 ### Email Templates
-Email templates are configured in the Supabase Edge Functions and can be customized for:
+Email templates are configured in the Supabase Edge Functions:
 - Welcome messages
 - Course-specific information
-- Branding and styling
+- Service inquiry responses
+- Professional branding and styling
 
-## 📞 Support
+### UI Customization
+- **Design System**: Configured in `index.css` and `tailwind.config.ts`
+- **Components**: shadcn/ui components with custom variants
+- **Theming**: CSS variables for colors and gradients
+- **Responsive**: Mobile-first design approach
 
-For technical support or questions:
-- Check the [Lovable Documentation](https://docs.lovable.dev/)
-- Visit [Supabase Documentation](https://supabase.com/docs)
-- Review [Resend Documentation](https://resend.com/docs)
+## 📞 Support & Documentation
+
+### Resources
+- [Lovable Documentation](https://docs.lovable.dev/)
+- [Supabase Documentation](https://supabase.com/docs)
+- [Resend Documentation](https://resend.com/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [shadcn/ui Documentation](https://ui.shadcn.com/)
+
+### Getting Help
+- Check console logs for debugging information
+- Review Supabase dashboard for database issues
+- Verify email service configuration
+- Test form submissions in development mode
+
+## 🏆 Platform Highlights
+
+### Phase 1: Enhanced Course Catalog ✅
+- Expanded course offerings (5 courses)
+- Professional course descriptions
+- Competitive pricing structure
+- Detailed curriculum information
+
+### Phase 2: Professional Services ✅
+- Complete services catalog
+- Category-based filtering
+- Flexible pricing models
+- Service inquiry system
+
+### Phase 3: Advanced Contact System ✅
+- Database-integrated contact forms
+- Email notification system
+- Multiple inquiry types
+- Comprehensive FAQ section
+
+### Phase 4: Data Management & Analytics ✅
+- Real-time enrollment tracking
+- Service inquiry management
+- Contact submission logging
+- Status management system
+
+### Phase 5: Production-Ready Platform ✅
+- Comprehensive error handling
+- Email service integration
+- Security best practices
+- Performance optimization
 
 ## 📄 License
 
@@ -298,7 +394,11 @@ This project is created with Lovable and includes:
 - Supabase database integration
 - Email notification system
 - Responsive UI components
+- Professional service catalog
+- Comprehensive contact system
 
 ---
 
-**Built with ❤️ using Lovable, Supabase, and modern web technologies**
+**Built with ❤️ using Lovable, Supabase, React, and modern web technologies**
+
+*Ready for production deployment with full feature set and professional-grade architecture*

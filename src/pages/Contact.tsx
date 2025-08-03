@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   Mail, 
   Phone, 
@@ -72,8 +73,9 @@ export default function Contact() {
     name: "",
     email: "",
     phone: "",
-    course: "",
+    subject: "",
     message: "",
+    inquiryType: "general",
     newsletter: false,
     terms: false
   });
@@ -129,9 +131,39 @@ export default function Contact() {
 
     setIsSubmitting(true);
 
-    // Simulate form submission with realistic delay
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Submit to database
+      const { error: dbError } = await supabase
+        .from('contact_submissions')
+        .insert({
+          full_name: formData.name,
+          email: formData.email,
+          phone: formData.phone || null,
+          subject: formData.subject || null,
+          message: formData.message,
+          inquiry_type: formData.inquiryType,
+          status: 'pending'
+        });
+
+      if (dbError) throw dbError;
+
+      // Send email notification
+      const { error: emailError } = await supabase.functions.invoke('send-email', {
+        body: {
+          type: 'contact',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+          inquiryType: formData.inquiryType
+        }
+      });
+
+      if (emailError) {
+        console.error('Email sending failed:', emailError);
+        // Don't throw here, as database submission succeeded
+      }
       
       toast({
         title: "Message Sent Successfully!",
@@ -143,13 +175,15 @@ export default function Contact() {
         name: "",
         email: "",
         phone: "",
-        course: "",
+        subject: "",
         message: "",
+        inquiryType: "general",
         newsletter: false,
         terms: false
       });
       
     } catch (error) {
+      console.error('Contact form submission error:', error);
       toast({
         title: "Error",
         description: "Something went wrong. Please try again.",
@@ -231,19 +265,30 @@ export default function Contact() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="course">Course Interest</Label>
-                      <Select value={formData.course} onValueChange={(value) => handleInputChange("course", value)}>
+                      <Label htmlFor="inquiryType">Inquiry Type</Label>
+                      <Select value={formData.inquiryType} onValueChange={(value) => handleInputChange("inquiryType", value)}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a course" />
+                          <SelectValue placeholder="Select inquiry type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="wordpress">WordPress CMS Mastery</SelectItem>
-                          <SelectItem value="shopify">Shopify E-commerce Management</SelectItem>
-                          <SelectItem value="both">Both Courses</SelectItem>
                           <SelectItem value="general">General Inquiry</SelectItem>
+                          <SelectItem value="course">Course Information</SelectItem>
+                          <SelectItem value="technical">Technical Support</SelectItem>
+                          <SelectItem value="partnership">Partnership</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="subject">Subject</Label>
+                    <Input
+                      id="subject"
+                      type="text"
+                      value={formData.subject}
+                      onChange={(e) => handleInputChange("subject", e.target.value)}
+                      placeholder="Brief subject of your inquiry"
+                    />
                   </div>
 
                   <div className="space-y-2">
