@@ -8,6 +8,7 @@ const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/wordpress", label: "WordPress", icon: BookOpen },
   { href: "/shopify", label: "Shopify", icon: BookOpen },
+  { href: "/services", label: "Services", icon: Users },
   { href: "/syllabus", label: "Syllabus", icon: FileText },
   { href: "/about", label: "About", icon: Info },
   { href: "/contact", label: "Contact", icon: Phone },

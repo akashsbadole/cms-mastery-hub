@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          inquiry_type: string | null
+          message: string
+          phone: string | null
+          status: string | null
+          subject: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          inquiry_type?: string | null
+          message: string
+          phone?: string | null
+          status?: string | null
+          subject?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          inquiry_type?: string | null
+          message?: string
+          phone?: string | null
+          status?: string | null
+          subject?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           created_at: string
@@ -82,6 +121,107 @@ export type Database = {
           newsletter_subscription?: boolean | null
           payment_status?: string | null
           phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      service_inquiries: {
+        Row: {
+          budget_range: string | null
+          company: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          message: string | null
+          phone: string | null
+          project_description: string | null
+          service_id: string | null
+          service_type: string | null
+          status: string | null
+          timeline: string | null
+          updated_at: string
+        }
+        Insert: {
+          budget_range?: string | null
+          company?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          message?: string | null
+          phone?: string | null
+          project_description?: string | null
+          service_id?: string | null
+          service_type?: string | null
+          status?: string | null
+          timeline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          budget_range?: string | null
+          company?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string | null
+          phone?: string | null
+          project_description?: string | null
+          service_id?: string | null
+          service_type?: string | null
+          status?: string | null
+          timeline?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_inquiries_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          duration: string | null
+          features: string[] | null
+          id: string
+          name: string
+          popular: boolean | null
+          price: number | null
+          price_type: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          features?: string[] | null
+          id?: string
+          name: string
+          popular?: boolean | null
+          price?: number | null
+          price_type: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          features?: string[] | null
+          id?: string
+          name?: string
+          popular?: boolean | null
+          price?: number | null
+          price_type?: string
           updated_at?: string
         }
         Relationships: []
